@@ -1,193 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <title>SEBASA ARSIP MATERIAL </title>
-  <style>
-    body {
-      font-family: "Segoe UI", Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background: linear-gradient(135deg, #ffecd2, #fcb69f);
-      min-height: 100vh;
-    }
-    header {
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      color: white;
-      text-align: center;
-      padding: 100px 20px;
-      border-bottom-left-radius: 50px;
-      border-bottom-right-radius: 50px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
-    header h1 {
-      font-size: 55px;
-      margin: 0;
-      font-weight: bold;
-    }
-    header p {
-      font-size: 20px;
-      margin-top: 10px;
-      opacity: 0.9;
-    }
-    nav {
-      background: #222;
-      text-align: center;
-      padding: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav a {
-      color: white;
-      margin: 0 20px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    nav a:hover {
-      color: #00f2fe;
-    }
-    main {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px 20px;
-    }
-    .post {
-      background: white;
-      margin-bottom: 25px;
-      padding: 25px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .post:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-    }
-    .post h2 {
-      margin-top: 0;
-      color: #4facfe;
-    }
-    .message-box {
-      background: #f7faff;
-      padding: 15px;
-      border-left: 4px solid #4facfe;
-      margin-top: 10px;
-      border-radius: 8px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-    button {
-      background: linear-gradient(135deg, #43e97b, #38f9d7);
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    button:hover {
-      background: linear-gradient(135deg, #38f9d7, #43e97b);
-      transform: scale(1.05);
-    }
-    /* Galeri Foto */
-    #galeri {
-      margin-top: 40px;
-    }
-    .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-}
-
-.card {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
-.card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.card h3 {
-  margin: 15px;
-  color: #4facfe;
-  font-size: 20px;
-}
-
-.card p {
-  margin: 0 15px 20px 15px;
-  color: #666;
-  font-size: 15px;
-}
-
-.card a {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-      }
-      
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-    .gallery img {
-      width: 100%;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .gallery img:hover {
-      transform: scale(1.07);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-    }
-    footer {
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin-top: 50px;
-      border-top-left-radius: 50px;
-      border-top-right-radius: 50px;
-    }
-  </style>
-</head>
-<body>
-
-<header>
-  <h1>SEBASA ARSIP MATERIAL</h1>
-  <p>Sebasa and the gank</p>
-</header>
-
-<nav>
-  <a href="#posts">Beranda</a>
-  <a href="#KESANDANPESAN">KESAN DAN PESAN</a>
-  <a href="#galeri">Galeri Foto</a>
-</nav>
-
-<main>
-  <section id="galeri" class="post">
+<section id="galeri" class="post">
   <h2>Artikel Kenangan</h2>
   <div class="gallery">
     <div class="card">
@@ -219,67 +30,152 @@
       </a>
     </div>
   </div>
-  </section>
-  
-</main>
-
-<footer>
-  <p>&copy; 2025 Kenangan Seb,seb,seb • Dibuat dengan❤️🤣</p>
-</footer>
-
-<script>
-  const form = document.getElementById("guestForm");
-  const pesanList = document.getElementById("pesanList");
-
-  let pesanArray = JSON.parse(localStorage.getItem("pesanKelas")) || [];
-  tampilkanPesan();
-
-  form.addEventListener("submit", function(e){
-    e.preventDefault();
-    const nama = document.getElementById("nama").value;
-    const pesan = document.getElementById("pesan").value;
-
-    const newPesan = { nama, pesan, waktu: new Date().toLocaleString() };
-    pesanArray.unshift(newPesan);
-
-    localStorage.setItem("pesanKelas", JSON.stringify(pesanArray));
-    tampilkanPesan();
-    form.reset();
-  });
-
-  function tampilkanPesan(){
-    pesanList.innerHTML = "";
-    pesanArray.forEach(p => {
-      pesanList.innerHTML += `
-        <div class="message-box">
-          <b>${p.nama}</b> <small>(${p.waktu})</small>
-          <p>${p.pesan}</p>
-        </div>
-      `;
-    });
-  }
-</script>
-<!DOCTYPE html>
+          </section>
+    <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <title>FULL FAMILY</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: #f7f7f7; }
-    img { width: 100%; border-radius: 10px; }
+    body {
+      font-family: "Segoe UI", Arial;
+      background: linear-gradient(135deg, #ffecd2, #fcb69f);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
     h1 { color: #4facfe; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #4facfe;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
   </style>
 </head>
 <body>
   <h1>FULL FAMILY</h1>
-  <img src="1.jpg" alt="Foto Kenangan">
-  <p>Kisah kebersamaan dan tawa saat seluruh kelas berkumpul untuk foto kenangan. Momen ini menjadi simbol kekompakan yang tak tergantikan.</p>
-  <a href="index.html">← Kembali</a>
+  <img src="1.jpg" alt="Foto Kenangan 1">
+  <p>Kenangan ini merekam seluruh keluarga kelas kita dalam satu frame. Tawa, gurauan, dan ekspresi lucu yang tercipta begitu alami, seolah waktu berhenti sejenak untuk menyimpannya dalam ingatan kita semua.</p>
+  <a href="index.html">← Kembali ke Beranda</a>
+</body>
+    </html>
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Suasana Materi Kelas</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial;
+      background: linear-gradient(135deg, #d4fc79, #96e6a1);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    h1 { color: #218838; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #218838;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Suasana Materi Kelas</h1>
+  <img src="Senasa.jpg" alt="Foto Kenangan 3">
+  <p>Pelajaran terasa panjang, tapi suasananya selalu hangat. Terkadang serius, kadang penuh tawa — tapi selalu ada makna di setiap catatan yang kita tulis bersama.</p>
+  <a href="index.html">← Kembali ke Beranda</a>
+</body>
+    </html>
+    <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Adit and the Gank</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    h1 { color: #0077ff; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #0077ff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Adit and the Gank</h1>
+  <img src="2.jpg" alt="Foto Kenangan 2">
+  <p>Kelompok paling ramai di kelas! Dari canda ringan sampai ide-ide spontan yang sering bikin guru geleng-geleng. Tapi tanpa mereka, kelas pasti terasa lebih sepi.</p>
+  <a href="index.html">← Kembali ke Beranda</a>
+</body>
+    </html>
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Acara Tak Terlupa</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial;
+      background: linear-gradient(135deg, #fad0c4, #ffd1ff);
+      margin: 0;
+      padding: 30px;
+      color: #333;
+    }
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+    h1 { color: #ff4fac; }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      background: #ff4fac;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Acara Tak Terlupa</h1>
+  <img src="56.jpg" alt="Foto Kenangan 4">
+  <p>Mungkin kita lupa apa acaranya, tapi tidak dengan kehangatan hari itu. Suasana ramai, penuh tawa dan cerita yang jadi kenangan indah di hati semua.</p>
+  <a href="index.html">← Kembali ke Beranda</a>
 </body>
 </html>
-  
-</body>
-
- 
-</html>
-
