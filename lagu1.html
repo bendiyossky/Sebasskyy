@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Karaoke Lirik Otomatis</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+      position: relative;
+    }
+
+    audio {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    .lyric-line {
+      opacity: 0;
+      font-size: 2em;
+      font-weight: 1000;
+      transition: opacity 0.6s ease, transform 1s ease;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    }
+
+    .lyric-line.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+      filter: brightness(1.5);
+    }
+
+    #playButton {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff4757;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1em;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: 0.3s;
+    }
+
+    #playButton:hover {
+      background: #ff6b81;
+      transform: translateX(-50%) scale(1.05);
+    }
+
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.3); }
+      100% { opacity: 0.2; transform: scale(0.9); }
+    }
+    
+ 
+
+    /* Opening section */
+    #opening {
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+      color: #fff;
+    }
+
+    #opening h1 {
+      font-size: 2em;
+      text-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff;
+      transform: rotateY(-10deg);
+    }
+
+    #opening .wave {
+      font-size: 3em;
+      display: inline-block;
+      animation: wave 1.2s infinite ease-in-out;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(25deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    } 
+    
+  #light-effect {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.light {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  animation: light 5s infinite;
+}
+
+@keyframes light {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0.2;
+  }
+}
+
+  </style>
+</head>
+<body>
+    
+    <div id="stars"></div>
+    <div id="light-effect"></div>
+  
+
+
+  <!-- Opening -->
+  <div id="opening">
+    <div class="wave">👋</div>
+    <h1>HAI SEB</h1>
+    <p>KITA GALAU BARENG YU</p>
+    <button id="startButton">klik ikon ini → 🎵 lalu klik putar lagu ketuk terus Ampe hilang kadang eror😭</button>
+    <p>ini mah akal-akalan barat</p> 
+   <p>kalo akal akalan kamu mah, maaf nggak bisa</p>
+  
+  </div>
+
+
+<div class="container" id="karaokeContainer" style="display: none;">
+  <!-- Konten karaoke -->
+</div>
+
+
+  <div class="container">
+    <audio id="audio">
+      <source src="gan.mp3" type="audio/mp3" />
+    </audio>
+    <button id="playButton">▶ Putar Lagu</button>
+    <div id="lyrics-area"></div>
+  </div>
+
+
+  <script>
+  // ====== LIRIK LAGU ======
+  const lirikTeks = `
+HAI SEB
+GIMANA KABAR KAMU SEMUA
+SEMOGA KALIAN BAIK2 SAJA
+ENJOY THE DAYS GUYS
+
+Hai
+Masihkah
+Luka itu
+Ada di sana
+
+Yang ku
+Tinggalkan
+Saat kita
+Masih bersama
+
+Kini waktu terasa berbeda
+Tanpa hadirmu
+Keras hati yang dulu bicara
+Berujung pilu
+
+Andai
+Angin mengulang
+Sebuah masa yang t'lah usang
+Kan ku telan isi bumi hanya untukmu
+Terima bunga maafku
+Layu termakan egoku
+Meski ku tahu
+Tak bisa
+
+yudah broo kejar kesuksesan, kebahagiaan dan ketenangan kamu yaa. dann inget kalo ga ada yg ga setara. kita beda kesibukan aja.
+
+Oh
+Mungkinkah
+Ada rindu
+Dibalik benci itu
+Yang perlahan
+Menghilang
+Saat nyamanku tak lagi kau butuh
+Kini waktu terasa berbeda
+Tanpa hadirmu
+Keras hati yang dulu bicara
+Berujung pilu
+
+Andai
+Angin mengulang
+Sebuah masa yang t'lah usang
+Kan ku telan isi bumi hanya untukmu
+Terima bunga maafku
+Layu termakan egoku
+Meski ku tahu
+Tak bisa
+
+Andai
+Angin mengulang
+Semua masa yang t'lah hilang
+Kan ku telan isi bumi hanya untukmu
+Terima bunga maafku
+Layu termakan egoku
+Meski ku tahu
+Meski ku tahu
+Ku tak akan bisa.
+
+(Udah seb maaf kalo kurang pas Ama lirik/karna emang nggak sesuai dengan kriteria dia seb)
+`;
+
+  // ====== DURASI PER BARIS (detik) ======
+  const durasiPerBaris = [
+    2,5,3,2,
+    3,4,3,3,
+    3,3,4,3,
+    5,5,6,7,
+    3,3,3,7,4,3,4,5,
+    11,
+    2,4,4,4,4,2,4,7,5,6,5,
+    3,3,3,7,4,3,4,5,
+    3,3,3,7,4,3,4,5,3
+  ];
+
+  // ====== OTOMATIS HITUNG WAKTU LIRIK ======
+  const barisLirik = lirikTeks.trim().split("\n").filter(line => line.trim() !== "");
+  let waktuSekarang = 0;
+  const lyricsData = barisLirik.map((text, i) => {
+    const obj = { time: waktuSekarang, text };
+    waktuSekarang += durasiPerBaris[i] || 3;
+    return obj;
+  });
+
+  // ====== TAMBAH ELEMEN KE LAYAR ======
+  const lyricsArea = document.getElementById("lyrics-area");
+  lyricsData.forEach((line, idx) => {
+    const div = document.createElement("div");
+    div.classList.add("lyric-line");
+    div.id = "line-" + idx;
+    div.textContent = line.text;
+    lyricsArea.appendChild(div);
+  });
+
+  // ====== FUNGSI UPDATE LIRIK ======
+  const audio = document.getElementById("audio");
+  function updateLyrics() {
+    const currentTime = audio.currentTime;
+    let activeIndex = 0;
+
+    for (let i = 0; i < lyricsData.length; i++) {
+      const lyricStart = lyricsData[i].time;
+      const lyricEnd = lyricsData[i + 1] ? lyricsData[i + 1].time : audio.duration;
+      if (currentTime >= lyricStart && currentTime < lyricEnd) {
+        activeIndex = i;
+        break;
+      }
+    }
+
+    lyricsData.forEach((_, idx) => {
+      const el = document.getElementById("line-" + idx);
+      el.classList.toggle("active", idx === activeIndex);
+    });
+  }
+
+  audio.addEventListener("timeupdate", updateLyrics);
+
+  // ====== TOMBOL PLAY/PAUSE ======
+  const playButton = document.getElementById("playButton");
+  let isPlaying = false;
+
+  playButton.addEventListener("click", () => {
+    if (!isPlaying) {
+      audio.play();
+      playButton.textContent = "⏸ Jeda Lagu";
+    } else {
+      audio.pause();
+      playButton.textContent = "▶ Putar Lagu";
+    }
+    isPlaying = !isPlaying;
+  });
+
+  // ====== BINTANG DI LATAR ======
+  (function createStars() {
+    const starsContainer = document.getElementById('stars');
+    for (let i = 0; i < 200; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = Math.random() * 100 + 'vw';
+      star.style.top = Math.random() * 100 + 'vh';
+      starsContainer.appendChild(star);
+    }
+    
+      const startButton = document.getElementById("startButton");
+const opening = document.getElementById("opening");
+const karaokeContainer = document.getElementById("karaokeContainer");
+
+startButton.addEventListener("click", () => {
+  opening.style.display = "none";
+  karaokeContainer.style.display = "block";
+  audio.play(); // Memulai audio secara otomatis
+});
+    
+  function createLightEffect() {
+  const lightEffectContainer = document.getElementById('light-effect');
+  for (let i = 0; i < 5; i++) {
+    const light = document.createElement('div');
+    light.classList.add('light');
+    light.style.left = Math.random() * 100 + 'vw';
+    light.style.top = Math.random() * 100 + 'vh';
+    light.style.animationDelay = Math.random() * 5 + 's';
+    lightEffectContainer.appendChild(light);
+  }
+}
+createLightEffect();
+  })();
+  </script>
+
+</body>
+</html>
